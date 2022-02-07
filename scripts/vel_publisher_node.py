@@ -16,10 +16,13 @@ if __name__ == '__main__':
 	vel_cmd = Twist()
 	# run this control loop regularly
 	while not rospy.is_shutdown():
+		var = input("give me a desired location")
 		# set the linear (forward/backward) velocity command
-		vel_cmd.linear.x = 0.5
+		error = xd - data.x
+		vel = error * kp
+		vel_cmd.linear.x = vel
 		# set the angular (heading) velocity command
-		vel_cmd.angular.z = 0.5
+		#vel_cmd.angular.z = 0.5
 		# publish the command to the defined topic
 		cmd_pub.publish(vel_cmd)
 		# wait for 0.1 seconds until the next loop and repeat
